@@ -1,6 +1,7 @@
 // Only need to be set once; they are Global variables, and survive reboots
 // setGlobal('HabitrpgUserid', '########-####-####-####-############');
 // setGlobal('HabitrpgApiToken', '########-####-####-####-############');
+// setGlobal('HabitrpgCDS', '0');  // Custom Day Start value
 
 const baseurl = 'https://habitrpg.com:443/api/v2/';
 var result = "";
