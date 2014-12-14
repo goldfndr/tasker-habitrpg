@@ -31,7 +31,7 @@
 			<Str sr="arg0" ve="3">Tasker/log/streaks-all.txt</Str>
 			<Str sr="arg1" ve="3">As of %DATE %TIME:
 %result</Str>
-			<Int sr="arg2" val="0"/>
+			<Int sr="arg2" val="1"/>
 			<Int sr="arg3" val="1"/>
 		</Action>
 	</Task>
