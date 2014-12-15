@@ -6,17 +6,17 @@ A base for interacting with [HabitRPG's](https://habitrpg.com/) [API](https://ha
 Installation
 ------------
 
-1. Create a directory named ```JavaScript``` in your **/sdcard/Tasker** directory.
+1. Download the files, edit **HabitRPGfns.js** to match your [API values](https://habitrpg.com/#/options/settings/api) (note the API Token as password warning!) and [CDS](http://habitrpg.wikia.com/wiki/Settings#Custom_Day_Start). Note that you'll need to uncomment them (remove the ```//``` at the beginning of the three ```setGlobal``` lines).
+
+2. Create a directory named ```JavaScript``` in your **/sdcard/Tasker** directory.
 (You'll probably find other directories here, like ```log``` and ```userguide```.)
 
-2. Copy the **HabitRPGfns.js** file from here to your newly created **/sdcard/Tasker/JavaScript** directory.
-It would behoove you to uncomment the first lines and set them to match
-your [API values](https://habitrpg.com/#/options/settings/api) (note the API Token as password warning!).
-If you want to edit after copying, you could paste the values in from the [mobile app](https://play.google.com/store/apps/details?id=com.ocdevel.habitrpg). After you have it working, you can recomment or delete those lines.
+3. Copy the edited **HabitRPGfns.js** file to your newly created **/sdcard/Tasker/JavaScript** directory.
+If you hadn't edited it yet, you could paste the values in from the [mobile app](https://play.google.com/store/apps/details?id=com.ocdevel.habitrpg). After you have it working, you can recomment or delete those lines. New versions of HabitRPGfns.js will have them commented out.
 
-3. Optionally import some of the example tasks.
+4. Optionally import the example tasks. Within Tasker, press the Tasks tab twice (or long-press it) to get to Import. The files will need to end with ".tsk.xml" to be visible.
 
-For some of the example tasks, you'll need to change the Variable Set ```%taskid``` action to use one of your own values.
+For a couple of the example tasks (score a task, check done), you'll need to change the Variable Set ```%taskid``` action to use one of your own values.
 One method to find your task's ID is the following.
   1. Log into HabitRPG from Chrome or Firefox.
   2. Open the Developer Tools (press F12 or Ctrl+Shift+I).
@@ -30,6 +30,22 @@ One method to find your task's ID is the following.
 The HabitRPGfns.js is commented with each operation's inputs; use ```%result``` (string) or ```%results``` (array) as appropriate.
 
 If you plan to do any automated profiles, you might want to at least do a Test Net action (Type=Connection Type) and stop if the value is ```none```.
+
+### Example 1
+Create a profile that, within a Time context, runs once a day (From equals To), with a task of *get streaks*. No more wondering what the heck your streaks were after you accidentally didn't login for a couple of days!
+
+### Example 2
+Create a profile that, within a Time context, runs periodically in the day (repeats), with a cloned task of *check done*. A persistent reminder to do that daily!
+
+### Example 3
+If there's a daily you often forget to perform or check off, you can easily create a widget with a tap shortcut of a clone of *score a task*, and a profile with time context that periodically does a cloned *check done* with actions to change the widget's appearance depending on task completed (rather than notify). This functionality is included with Tasker, but you can use Zooper Widget or Minimalistic Text or other plugins for customization.
+
+### Planned features
+* function: get_due (data similar to the [User Data Display](https://oldgods.net/habitrpg/habitrpg_user_data_display.html)'s Dailies Incomplete "task" column)
+* task: check due (a persistent notification that calls get_due) -- see what and how many dailies you haven't yet done!
+* function: strip emoji short-names (short codes)
+* function: replace emoji short-names with Android emoji ([Kit Kat/4.4](http://emojipedia.org/google-emoji-list/) or newer preferred)
+* task: prune the streaks-all log to a limited count
 
 Credits
 -------
