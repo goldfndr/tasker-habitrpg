@@ -62,6 +62,8 @@ If there's a daily you often forget to perform or check off, you can easily [cre
 * task: *check due* (a persistent notification that calls get_due) -- see what and how many dailies you haven't yet done!
 * function: replace [emoji short-names](http://www.emoji-cheat-sheet.com/) with Android emoji ([Kit Kat/4.4](http://emojipedia.org/google-emoji-list/) or newer preferred)
 * task: *prune streaks-all* to a limited count
+* scene: add a task; [spinners](http://developer.android.com/guide/topics/ui/controls/spinner.html)
+* scene: augment above to store while offline, sync when getting online
 
 Credits
 -------
