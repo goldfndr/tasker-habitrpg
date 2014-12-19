@@ -35,12 +35,12 @@ HabitRPGfns.js is commented with each operation's inputs; use ```%result``` (str
 
 ### Example 2
 Create a profile that, within a Time context, runs periodically in the day (repeats), with a task of *check due* (e.g. every half hour from 11:33 after CDS to 0:33 after CDS).
-A [persistent reminder](http://tasker.dinglisch.net/userguide/en/help/ah_notification.html) (with count) of your remaining dailys!
+A [permanent reminder](http://tasker.dinglisch.net/userguide/en/help/ah_notification.html) (with count) of your remaining dailys!
 Note that there may be a very limited amount of space to display the list (wider in landscape); [AutoNotification](https://play.google.com/store/apps/details?id=com.joaomgcd.autonotification) is one way to display more.
 
 ### Example 3
 Create a profile that, within a Time context, runs periodically in the day (repeats), with a [cloned task](http://tasker.dinglisch.net/userguide/en/activity_main.html#tasks) of *check done* (with ```%taskid``` specifically set).
-A persistent reminder to do your daily! Optionally [add a location context](http://tasker.dinglisch.net/userguide/en/loccontext.html) if your daily can't be completed everywhere.
+A permanent reminder to do your daily! Optionally [add a location context](http://tasker.dinglisch.net/userguide/en/loccontext.html) if your daily can't be completed everywhere.
 
 ### Example 4
 If there's a specific daily you often forget to perform or check off, you can easily [create a widget](http://tasker.dinglisch.net/userguide/en/app_widgets.html)
