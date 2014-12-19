@@ -17,7 +17,8 @@ If you hadn't edited it yet, you could paste the values in from the [mobile app]
 4. Optionally import the example tasks. Copy them somewhere (e.g. /sdcard/Tasker/tasks) then, within Tasker, [Import](http://tasker.dinglisch.net/userguide/en/faqs/faq-how.html#q). The files need to end with ".tsk.xml" to be listed.
 
 For a couple of the example tasks (*score a task*, *check done*), you'll need to change the Variable Set ```%taskid``` action to use one of your own values. I suggest cloning these tasks (long-press name, menu, Clone) to avoid confusion, or you could import again.
-One method to find a task's ID is the following.
+An easy method to find a Task's ID is to use the [User Data Display](https://oldgods.net/habitrpg/habitrpg_user_data_display.html)'s Task Overview with "toggle developer data".
+A cumbersome alternative method is the following.
   1. Login to HabitRPG from Chrome or Firefox.
   2. Open the Developer Tools (press F12 or Ctrl+Shift+I).
   3. Choose the Network tab.
@@ -33,10 +34,20 @@ HabitRPGfns.js is commented with each operation's inputs; use ```%result``` (str
 [Create a profile](http://www.pocketables.com/2013/05/beginners-guide-to-tasker-part-1-5-tasker-basics-new-ui.html) that, within a [Time context](http://tasker.dinglisch.net/userguide/en/timecontext.html), runs once a day (From equals To), with a task of *get streaks*. No more wondering what the heck your streaks were after you accidentally didn't login for a couple of days!
 
 ### Example 2
-Create a profile that, within a Time context, runs periodically in the day (repeats), with a [cloned task](http://tasker.dinglisch.net/userguide/en/activity_main.html#tasks) of *check done*. A [persistent reminder](http://tasker.dinglisch.net/userguide/en/help/ah_notification.html) to do that daily! Optionally [add a location context](http://tasker.dinglisch.net/userguide/en/loccontext.html) if your daily can't be completed everywhere.
+Create a profile that, within a Time context, runs periodically in the day (repeats), with a task of *check due* (e.g. every half hour from 11:33 after CDS to 0:33 after CDS).
+A [persistent reminder](http://tasker.dinglisch.net/userguide/en/help/ah_notification.html) (with count) of your remaining dailys!
+Note that there may be a very limited amount of space to display the list (wider in landscape); [AutoNotification](https://play.google.com/store/apps/details?id=com.joaomgcd.autonotification) is one way to display more.
 
 ### Example 3
-If there's a daily you often forget to perform or check off, you can easily [create a widget](http://tasker.dinglisch.net/userguide/en/app_widgets.html) with a tap shortcut of a clone of *score a task*, and a profile with time context that periodically does a cloned *check done* with actions to change the widget's [image](http://tasker.dinglisch.net/userguide/en/help/ah_change_widget_icon.html) and/or [label](http://tasker.dinglisch.net/userguide/en/help/ah_change_widget_text.html) depending on task completed (rather than notify). This functionality is included with Tasker, but you can use Zooper Widget or Minimalistic Text or other plugins for further customization.
+Create a profile that, within a Time context, runs periodically in the day (repeats), with a [cloned task](http://tasker.dinglisch.net/userguide/en/activity_main.html#tasks) of *check done* (with ```%taskid``` specifically set).
+A persistent reminder to do your daily! Optionally [add a location context](http://tasker.dinglisch.net/userguide/en/loccontext.html) if your daily can't be completed everywhere.
+
+### Example 4
+If there's a specific daily you often forget to perform or check off, you can easily [create a widget](http://tasker.dinglisch.net/userguide/en/app_widgets.html)
+with a tap shortcut of a clone of *score a task*,
+and a profile with time context that periodically does a cloned *check done*
+with actions to change the widget's [image](http://tasker.dinglisch.net/userguide/en/help/ah_change_widget_icon.html) and/or [label](http://tasker.dinglisch.net/userguide/en/help/ah_change_widget_text.html) depending on task completed (rather than notify).
+This functionality is included with Tasker, but you can use Zooper Widget or Minimalistic Text or other plugins for further customization.
 
 ### Useful tips
 * Strip the [emoji short-names](http://www.emoji-cheat-sheet.com/) from the result.
@@ -58,12 +69,10 @@ If there's a daily you often forget to perform or check off, you can easily [cre
 > Stop [ *Task:* ] *If* [ ```%contype``` ~ ```none``` ]
 
 ### Planned features
-* function: get_due (data similar to the [User Data Display](https://oldgods.net/habitrpg/habitrpg_user_data_display.html)'s Dailies Incomplete "task" column)
-* task: *check due* (a persistent notification that calls get_due) -- see what and how many dailies you haven't yet done!
 * function: replace [emoji short-names](http://www.emoji-cheat-sheet.com/) with Android emoji ([Kit Kat/4.4](http://emojipedia.org/google-emoji-list/) or newer preferred)
 * task: *prune streaks-all* to a limited count
 * scene: add a task; [spinners](http://developer.android.com/guide/topics/ui/controls/spinner.html)
-* scene: augment above to store while offline, sync when getting online
+* scene: augment above to store while offline, sync when getting online (possibly premium)
 
 Credits
 -------

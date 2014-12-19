@@ -1,4 +1,4 @@
-// Only need to be set once; they are Global variables, and survive reboots
+// // Only need to be set once; they are Global variables, and survive reboots
 // setGlobal('HabitrpgUserid', '########-####-####-####-############');
 // setGlobal('HabitrpgApiToken', '########-####-####-####-############');
 // setGlobal('HabitrpgCDS', '0');  // Custom Day Start value
@@ -7,13 +7,17 @@ const baseurl = 'https://habitrpg.com:443/api/v2/';
 var result = "";
 var results = [];
 
-// Input: text, type (default "todo"), notes (default "")
-// Results: response
+// NOTE: %priority is reserved by Tasker. Use %difficulty instead.
+// Input: text, tasktype (default "todo"), notes (default ""),
+//        difficulty (default 1), attribute (default str)
+// Result: response (JSON of task)
 function add_task() {
-	type = type ||  "todo";
-	notes = notes || "";
-	http_post_data = { "text": text, "type": type, "notes": notes };
-
+	var tasktype = tasktype || 'todo';
+	var jsonstring ='"text":"' + text + '", "type":"' + tasktype + '"';
+	if(typeof notes      !== 'undefined') { jsonstring += ', "notes": "' + notes + '"'; }
+	if(typeof difficulty !== 'undefined') { jsonstring += ', "priority": ' + difficulty; }
+	if(typeof attribute  !== 'undefined') { jsonstring += ', "attribute": "' + attribute + '"'; }
+	http_post_data = '{ ' + jsonstring + ' }';
 	var http = new XMLHttpRequest();
 	http.open("POST", baseurl + 'user/tasks', false);
 	setHeaders(http);
@@ -23,10 +27,10 @@ function add_task() {
 
 
 // Input: taskid, direction (default "up")
-// Results: completed
+// Result: delta (arbitrarily chosen)
 //http://blog.andrew.net.au/2014/08/05
 function score_task() {
-	direction = direction || "up";
+	var direction = direction || "up";
 
 	var http = new XMLHttpRequest();
 	http.open("POST",baseurl + 'user/tasks/' + taskid + '/' + direction, false);
@@ -38,7 +42,7 @@ function score_task() {
 }
 
 // Input: taskid
-// Results: completed, text, notes, value, priority
+// Results: completed, text, notes, value, priority, streak
 // guessed from http://blog.andrew.net.au/2014/08/05
 function query_task() {
 	var http = new XMLHttpRequest();
@@ -61,7 +65,8 @@ function get_all_tasks() {
 }
 
 // Input: (none)
-// Results: string (with linefeeds) and array of streak@title
+// Result: string (with linefeeds)
+// Results: array of streak@title
 function get_streaks() {
 	var p = get_all_tasks();
 	for(var key in p) {
@@ -72,6 +77,33 @@ function get_streaks() {
 		}
 	}
 }
+
+// Input: (none)
+// Results: string (with linefeeds) and array of non-gray dailys undone
+// Note: use results(#) for count
+function get_due() {
+	var today = new Date();
+	// It would be cumbersome to get the entire user object just for this
+	// so expect that if one uses custom day start, it's stored in Tasker.
+	var cds = global('HabitrpgCDS') || 0;
+
+	// credit: Alys's habitrpg_user_data_display.html collateDailiesData()
+	today.setHours(today.getHours() - cds);
+	today = ["su","m","t","w","th","f","s"][today.getDay()];
+
+	var p = get_all_tasks();
+	for(var key in p) {
+		var obj = p[key];
+		if (obj.type != 'daily' || obj.completed)   {
+			continue;
+		}
+		if(obj.repeat[today]) {
+			result += obj.text + "\n";
+			results.push(obj.text);
+		}
+	}
+}
+
 
 function setHeaders(http) {
 	http.setRequestHeader("Content-Type", "application/json");
@@ -85,6 +117,7 @@ try {
 		case "score_task": score_task(); break;
 		case "query_task": query_task(); break;
 		case "get_streaks" : get_streaks(); break;
+		case "get_due" : get_due(); break;
 		//default: flash('"' + operation + '" is not implemented in HabitRPGfns.js'); break;
 	}
 } catch(e) {
