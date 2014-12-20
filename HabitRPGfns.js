@@ -8,20 +8,38 @@ var result = "";
 var results = [];
 
 // NOTE: %priority is reserved by Tasker. Use %difficulty instead.
-// Input: text, tasktype (default "todo"), notes (default ""),
-//        difficulty (default 1), attribute (default str)
+// For %boolsfalse, use "down" or "m t w th" or alike; unmentioned are true.
+//   Leave unset to have up, down =true.
+// Input: text, tasktype (default "todo"), notes (""), id, value (0),
+//        difficulty (1), attribute ("str"), boolsfalse
 // Result: response (JSON of task)
 function add_task() {
-	var tasktype = tasktype || 'todo';
-	var jsonstring ='"text":"' + text + '", "type":"' + tasktype + '"';
-	if(typeof notes      !== 'undefined') { jsonstring += ', "notes": "' + notes + '"'; }
-	if(typeof difficulty !== 'undefined') { jsonstring += ', "priority": ' + difficulty; }
+	var jsonstring ='"text":"' + text + '", "type":"' + (tasktype || 'todo') + '"';
+	if(typeof notes      !== 'undefined') { jsonstring += ', "notes": "' +     notes + '"'; }
+	if(typeof difficulty !== 'undefined') { jsonstring += ', "priority": ' +   difficulty; }
 	if(typeof attribute  !== 'undefined') { jsonstring += ', "attribute": "' + attribute + '"'; }
-	http_post_data = '{ ' + jsonstring + ' }';
+	if(typeof id         !== 'undefined') { jsonstring += ', "id": "' +        id + '"'; }
+	if(typeof value      !== 'undefined') { jsonstring += ', "value": "' +     notes + '"'; }
+
+	if(typeof boolsfalse      !== 'undefined') {
+		if (tasktype == 'habit') {
+			jsonstring += ', "' + (boolsfalse + ' ').split(" ").join('": false, "').slice(0, -3);
+		} else if (tasktype == 'daily') {
+		// NOTE: sending an object with a few false or true is incomplete
+		// See also https://github.com/HabitRPG/habitrpg/issues/2334#issuecomment-66168155
+			jsonstring += ', "repeat": { ';
+			'su m t w th f s'.split(' ').map(function(item) {
+				jsonstring += '"' + item + '": '
+					+ (boolsfalse.split(" ").indexOf(item) == -1)
+					+ (item != 's' ? ', ' : '');
+			});
+			jsonstring += ' }';
+		}
+	}
 	var http = new XMLHttpRequest();
 	http.open("POST", baseurl + 'user/tasks', false);
 	setHeaders(http);
-	http.send(http_post_data);
+	http.send('{ ' + jsonstring + ' }');
 	result = http.responseText;
 }
 

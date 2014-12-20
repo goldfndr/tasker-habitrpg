@@ -1,7 +1,7 @@
-<TaskerData sr="" dvi="1" tv="4.6m">
+<TaskerData sr="" dvi="1" tv="4.6u1m">
 	<Task sr="task170">
 		<cdate>1417326730782</cdate>
-		<edate>1418986418224</edate>
+		<edate>1419071029254</edate>
 		<id>170</id>
 		<nme>check due</nme>
 		<pri>10</pri>
@@ -56,6 +56,18 @@
 			<code>38</code>
 		</Action>
 		<Action sr="act14" ve="7">
+			<code>779</code>
+			<Str sr="arg0" ve="3">%title</Str>
+			<Int sr="arg1" val="0"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%count</lhs>
+					<op>0</op>
+					<rhs>0</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act15" ve="7">
 			<code>550</code>
 			<Str sr="arg0" ve="3"/>
 			<Str sr="arg1" ve="3">%result</Str>
@@ -64,10 +76,16 @@
 			<Int sr="arg4" val="30"/>
 			<Int sr="arg5" val="0"/>
 			<ConditionList sr="if">
+				<bool0>And</bool0>
 				<Condition sr="c0" ve="3">
 					<lhs>%caller1</lhs>
 					<op>2</op>
 					<rhs>ui</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%count</lhs>
+					<op>7</op>
+					<rhs>0</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
