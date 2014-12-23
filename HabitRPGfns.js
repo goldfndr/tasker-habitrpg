@@ -9,7 +9,7 @@ var results = [];
 
 // NOTE: %priority is reserved by Tasker. Use %difficulty instead.
 // For %boolsfalse, use "down" or "m t w th" or alike; unmentioned are true.
-//   Leave unset to have up, down =true.
+//   Leave unset to have up, down =true (habit), all days =true (daily).
 // Input: text, tasktype (default "todo"), notes (""), id, value (0),
 //        difficulty (1), attribute ("str"), boolsfalse
 // Result: response (JSON of task)
