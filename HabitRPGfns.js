@@ -26,7 +26,7 @@ function add_task() {
 	// There's probably a clever way to do these next few lines with an array.
 	if (typeof notes      !== 'undefined')  jsonstr += ', "notes": "' +     notes + '"';
 	if (typeof taskid     !== 'undefined')  jsonstr += ', "id": "' +        taskid + '"';
-	if (typeof value      !== 'undefined')  jsonstr += ', "value": "' +     notes + '"';
+	if (typeof value      !== 'undefined')  jsonstr += ', "value": "' +     value + '"';
 	if (typeof difficulty !== 'undefined')  jsonstr += ', "priority": ' +   difficulty;
 	if (typeof attribute  !== 'undefined')  jsonstr += ', "attribute": "' + attribute + '"';
 
