@@ -57,6 +57,7 @@ function score_task() {
 	var direction = direction || "up";
 	var p = JSON.parse(callAPI("POST", '/user/tasks/' + taskid + '/' + direction));
 	result = p.delta;  // We could alternatively return one of gp/exp/mp/hp
+	results = [ p.lvl, p.hp, p.exp, p.mp, p.gp ];
 }
 
 // Input: taskid
