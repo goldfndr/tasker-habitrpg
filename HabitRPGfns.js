@@ -21,7 +21,8 @@ var results = [];
 //   Leave unset to have both up+down =true (habit), all days =true (daily).
 // End result: response (JSON of task)
 function add_task() {
-	var jsonstr ='"text": "' + text + '", "type": "' + (tasktype || 'todo') + '"';
+	var type = typeof tasktype !== 'undefined' ? tasktype : 'todo';
+	var jsonstr ='"text": "' + text + '", "type": "' + type + '"';
 	// It would be simpler to avoid typeof but that seems to throw an error.
 	// There's probably a clever way to do these next few lines with an array.
 	if (typeof notes      !== 'undefined')  jsonstr += ', "notes": "' +     notes + '"';
