@@ -21,9 +21,9 @@ var results = [];
 //   Leave unset to have both up+down =true (habit), all days =true (daily).
 // End result: response (JSON of task)
 function add_task() {
-	var type = typeof tasktype !== 'undefined' ? tasktype : 'todo';
-	var jsonstr ='"text": "' + text + '", "type": "' + type + '"';
-	// It would be simpler to avoid typeof but that seems to throw an error.
+	var tasktype = tasktype || 'todo';
+	var jsonstr ='"text": "' + text + '", "type": "' + tasktype + '"';
+	// It would be simpler to avoid typeof but that seems to throw an error in Tasker.
 	// There's probably a clever way to do these next few lines with an array.
 	if (typeof notes      !== 'undefined')  jsonstr += ', "notes": "' +     notes + '"';
 	if (typeof taskid     !== 'undefined')  jsonstr += ', "id": "' +        taskid + '"';
@@ -53,6 +53,7 @@ function add_task() {
 
 // Input: taskid, direction (default "up")
 // End result: delta (arbitrarily chosen)
+// End results: lvl, hp, exp, mp, gp (after-value, not difference)
 //http://blog.andrew.net.au/2014/08/05
 function score_task() {
 	var direction = direction || "up";
