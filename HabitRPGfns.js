@@ -62,7 +62,7 @@ function score_task() {
 		// don't downscore if it's not a bad habit, check type and down
 		var q = JSON.parse(callAPI("GET", '/user/tasks/' + taskid));
 		if ((q.type == 'habit' && q.down == false) || q.type == 'daily' || q.type == 'todo') {
-			//flash ('Ignoring down score');
+			result = 'Ignoring down score';
 			runnable = false;
 		} 
 	} 
