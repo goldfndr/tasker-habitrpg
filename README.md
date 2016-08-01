@@ -16,7 +16,8 @@ If you hadn't edited it yet, you could paste the values in from the [mobile app]
 
 4. Optionally import the example tasks. Copy them somewhere (e.g. /sdcard/Tasker/tasks) then, within Tasker, [Import](http://tasker.dinglisch.net/userguide/en/faqs/faq-how.html#q). The files need to end with ".tsk.xml" to be listed.
 
-For a couple of the example tasks (*score a task*, *check done*), you'll need to change the Variable Set ```%taskid``` action to use one of your own values. I suggest cloning these tasks (long-press name, menu, Clone) to avoid confusion, or you could import again.
+For a the example tasks  *check done*, you'll need to change the Variable Set ```%taskid``` action to use one of your own values. I suggest cloning these tasks (long-press name, menu, Clone) to avoid confusion, or you could import again.
+*score a task* now supports Task ID and direction as parameters (%par1 and %par2), you can simply use it by adding to your personal task the "Perform Task" action, specify the "score a task" task and insert the Task ID into parameter 1 and direction into parameter 2 (optional)
 An easy method to find a Task's ID is to use the [User Data Display](https://oldgods.net/habitrpg/habitrpg_user_data_display.html)'s Task Overview with "toggle developer data".
 A cumbersome alternative method is the following.
   1. Login to HabitRPG from Chrome or Firefox.
@@ -44,10 +45,13 @@ A permanent reminder to do your daily! Optionally [add a location context](http:
 
 ### Example 4
 If there's a specific daily you often forget to perform or check off, you can easily [create a widget](http://tasker.dinglisch.net/userguide/en/app_widgets.html)
-with a tap shortcut of a clone of *score a task*,
+with a tap shortcut of "Perform task" action with *score a task*,
 and a profile with time context that periodically does a cloned *check done*
 with actions to change the widget's [image](http://tasker.dinglisch.net/userguide/en/help/ah_change_widget_icon.html) and/or [label](http://tasker.dinglisch.net/userguide/en/help/ah_change_widget_text.html) depending on task completed (rather than notify).
 This functionality is included with Tasker, but you can use Zooper Widget or Minimalistic Text or other plugins for further customization.
+
+### Example 5
+Using tasker "Perform Task" action with *InitChecklist* (in conjunction with *NextQuestion* and *score a task-checklist*) and passing a tag name as the first parameter (%par1) , you can run a notification based checklist that prompts you with tasks (dailies, habits and to-dos) with that tag. This way you can tag all your morning / evening routine habits and be sure to be reminded when the time comes.
 
 ### Useful tips
 * Strip the [emoji short-names](http://www.emoji-cheat-sheet.com/) from the result.

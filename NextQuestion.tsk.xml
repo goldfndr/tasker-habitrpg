@@ -1,0 +1,108 @@
+<TaskerData sr="" dvi="1" tv="4.8m">
+	<Task sr="task12">
+		<cdate>1443595445884</cdate>
+		<edate>1454415177875</edate>
+		<id>12</id>
+		<nme>NextQuestion</nme>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>779</code>
+			<Str sr="arg0" ve="3">%ChkItem(2)</Str>
+			<Int sr="arg1" val="1"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%ChkId</lhs>
+					<op>7</op>
+					<rhs>0</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>888</code>
+			<label>loop</label>
+			<Str sr="arg0" ve="3">%ChkId</Str>
+			<Int sr="arg1" val="1"/>
+			<Int sr="arg2" val="0"/>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%ChkId</lhs>
+					<op>6</op>
+					<rhs>%ChkList(#)+1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%ChkItem</Str>
+			<Str sr="arg1" ve="3">%ChkList(%ChkId)</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>590</code>
+			<Str sr="arg0" ve="3">%ChkItem</Str>
+			<Str sr="arg1" ve="3">,</Str>
+			<Int sr="arg2" val="0"/>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>523</code>
+			<Str sr="arg0" ve="3">%ChkItem(2)</Str>
+			<Str sr="arg1" ve="3">%ChkItem(3)</Str>
+			<Img sr="arg2" ve="2">
+				<nme>hd_ab_action_help</nme>
+			</Img>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+			<ListElementItem sr="item0">
+				<label>OK</label>
+				<Action sr="action" ve="7">
+					<code>130</code>
+					<Str sr="arg0" ve="3">Score a task-checklist</Str>
+					<Int sr="arg1" val="5"/>
+					<Str sr="arg2" ve="3">up</Str>
+					<Str sr="arg3" ve="3"/>
+					<Str sr="arg4" ve="3"/>
+					<Int sr="arg5" val="1"/>
+				</Action>
+				<Img sr="icon" ve="2">
+					<nme>hd_ab_navigation_accept</nme>
+				</Img>
+			</ListElementItem>
+			<ListElementItem sr="item1">
+				<label>KO</label>
+				<Action sr="action" ve="7">
+					<code>130</code>
+					<Str sr="arg0" ve="3">Score a task-checklist</Str>
+					<Int sr="arg1">
+						<var>%priority</var>
+					</Int>
+					<Str sr="arg2" ve="3">down</Str>
+					<Str sr="arg3" ve="3"/>
+					<Str sr="arg4" ve="3"/>
+					<Int sr="arg5" val="1"/>
+				</Action>
+				<Img sr="icon" ve="2">
+					<nme>hd_ab_content_remove</nme>
+				</Img>
+			</ListElementItem>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>43</code>
+			<label>fine file</label>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%ChecklistEnded</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>38</code>
+		</Action>
+	</Task>
+</TaskerData>
