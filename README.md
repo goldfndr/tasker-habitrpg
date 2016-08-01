@@ -26,8 +26,8 @@ A cumbersome alternative method is the following.
   2. Open the Developer Tools (press F12 or Ctrl+Shift+I).
   3. Choose the Network tab.
   4. [Sync](http://habitica.wikia.com/wiki/Sync).
-  5. Select the "batch-update" request.
-  6. In the Preview (Chrome) or Response (Firefox) subtab, expand ```dailys``` or ```habits``` or ```todos``` or ```rewards``` (whatever you're looking for).
+  5. Select the "user?userV=*number*" request.
+  6. In the Preview (Chrome) or Response (Firefox) subtab, expand ```data```.
   7. For Chrome, find the text you seek, expand the task's entry. For Firefox, expand objects until you find the text you seek.
   8. The "id" has the value you'll use for the Variable Set ```%taskid``` action.
 
