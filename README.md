@@ -16,7 +16,7 @@ If you hadn't edited it yet, you could paste the values in from the [mobile app]
 
 4. Optionally import the example tasks. Copy them somewhere (e.g. /sdcard/Tasker/tasks) then, within Tasker, [Import](http://tasker.dinglisch.net/userguide/en/faqs/faq-how.html#q). The files need to end with ".tsk.xml" to be listed.
 
-For a the example tasks  *check done*, you'll need to change the Variable Set ```%taskid``` action to use one of your own values. I suggest cloning these tasks (long-press name, menu, Clone) to avoid confusion, or you could import again.
+For the example task  *check done*, you'll need to change the Variable Set ```%taskid``` action to use one of your own values. I suggest cloning this task (long-press name, menu, Clone) to avoid confusion, or you could import again.
 *score a task* now supports Task ID and direction as parameters (%par1 and %par2), you can simply use it by adding to your personal task the "Perform Task" action, specify the "score a task" task and insert the Task ID into parameter 1 and direction into parameter 2 (optional)
 An easy method to find a Task's ID is to use the [User Data Display](https://oldgods.net/habitrpg/habitrpg_user_data_display.html)'s Task Overview with "toggle developer data".
 A cumbersome alternative method is the following.
@@ -29,7 +29,7 @@ A cumbersome alternative method is the following.
   7. For Chrome, find the text you seek, expand the task's entry. For Firefox, expand objects until you find the text you seek.
   8. The "id" has the value you'll use for the Variable Set ```%taskid``` action.
 
-HabitRPGfns.js is commented with each operation's inputs; use ```%result``` (string) or ```%results``` (array) as appropriate for your actions' parameters.
+HabitRPGfns.js is commented with each operation's inputs; use ```%result``` (string) or ```%results``` (array, e.g. ```%results2``` and ```%results3```) as appropriate for your actions' parameters.
 
 ### Example 1
 [Create a profile](http://www.pocketables.com/2013/05/beginners-guide-to-tasker-part-1-5-tasker-basics-new-ui.html) that, within a [Time context](http://tasker.dinglisch.net/userguide/en/timecontext.html), runs once a day (From equals To), with a task of *get streaks*. No more wondering what the heck your streaks were after you accidentally didn't login for a couple of days!
@@ -83,6 +83,7 @@ Credits
 * [LadyAlys: Android's Tasker app and HabitRPG's API](http://habitrpg.wikia.com/wiki/User_blog:LadyAlys/Android%27s_Tasker_app_and_HabitRPG%27s_API)
 * [Diary of a geek](http://blog.andrew.net.au/2014/08/05#nfc_habitrpg) (some reverse engineering from screenshots)
 * https://github.com/Alys/tools-for-habitrpg, especially the [User Data Display](https://oldgods.net/habitrpg/habitrpg_user_data_display.html)
+* Others who have submitted pull requests, thanks!
 
 Apologies
 ---------
