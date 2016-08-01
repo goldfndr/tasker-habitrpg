@@ -4,7 +4,7 @@
 // setGlobal('HabitrpgCDS', '0');  // Custom Day Start value, 0 if not set
 
 // A constant and two variables used by most of the functions
-var BASE_URL = 'https://habitica.com:443/api/v2';
+var BASE_URL = 'https://habitica.com:443/api/v3';
 var result = '';
 var results = [];
 
@@ -13,15 +13,15 @@ var results = [];
 //   parentheses then it has a default value, else a value must be assigned.
 // All will end with %result (string) and/or %results (array) set.
 
-
-// Input: text, tasktype (default "todo"), notes (""), taskid (random UUID),
-//        value (0 [reward=10]), difficulty (1), attribute ("str"), boolsfalse
+// Input: text, type (default "todo"), notes (""), taskid (random UUID),
+//        value (0 [reward=10]), difficulty (1), attribute ("str"),
+//        streak (0), boolsfalse
 // NOTE: Use %difficulty instead of %priority; latter is reserved by Tasker.
 // %boolsfalse setting examples: "down" or "m t w th"; unmentioned are true.
 //   Leave unset to have both up+down =true (habit), all days =true (daily).
 // End result: response (JSON of task)
 function add_task() {
-	var tasktype = tasktype || 'todo';
+	var tasktype = type || 'todo';
 	var jsonstr ='"text": "' + text + '", "type": "' + tasktype + '"';
 	// It would be simpler to avoid typeof but that seems to throw an error in Tasker.
 	// There's probably a clever way to do these next few lines with an array.
@@ -30,6 +30,10 @@ function add_task() {
 	if (typeof value      !== 'undefined')  jsonstr += ', "value": "' +     value + '"';
 	if (typeof difficulty !== 'undefined')  jsonstr += ', "priority": ' +   difficulty;
 	if (typeof attribute  !== 'undefined')  jsonstr += ', "attribute": "' + attribute + '"';
+	if (typeof streak     !== 'undefined')  jsonstr += ', "streak": ' +     streak;
+	if (typeof startdate  !== 'undefined')  jsonstr += ', "startDate": "' + startdate + '"';
+	if (typeof everyx     !== 'undefined')  jsonstr += ', "everyX" : ' +    everyx;
+	if (typeof frequency  !== 'undefined')  jsonstr += ', "frequency" : ' + frequency;
 
 	if (typeof boolsfalse !== 'undefined') {
 		if (tasktype == 'habit') {
@@ -47,7 +51,7 @@ function add_task() {
 		}
 	}
 
-	result = callAPI('POST', '/user/tasks', '{ ' + jsonstr + ' }');
+	result = callAPI('POST', '/tasks/user', '{ ' + jsonstr + ' }');
 }
 
 // Input: taskid, direction (default "up")
@@ -60,25 +64,38 @@ function score_task() {
 	if (dir == 'down') {
 		//only for testing
 		// don't downscore if it's not a bad habit, check type and down
-		var q = JSON.parse(callAPI("GET", '/user/tasks/' + taskid));
-		if ((q.type == 'habit' && q.down == false) || q.type == 'daily' || q.type == 'todo') {
-			result = 'Ignoring down score';
+		var q = JSON.parse(callAPI("GET", '/tasks/' + taskid));
+		if (q.success != 'true') {
+			alert('Failed to get task ' + taskid + ', doublecheck its ID');
+			return;
+		}
+		if ((q.data.type == 'habit' && q.data.down == false) || q.data.type == 'daily' || q.data.type == 'todo') {
+			result = 'Ignoring down score for ' + q.data.type + ': ' + q.data.text;
+			flash(result);
 			runnable = false;
-		} 
-	} 
+		}
+	}
 	if (runnable) {
-		var p = JSON.parse(callAPI("POST", '/user/tasks/' + taskid + '/' + dir));
-		result = p.delta;  // We could alternatively return one of gp/exp/mp/hp
-		results = [ p.lvl, p.hp, p.exp, p.mp, p.gp ];
+		var p = JSON.parse(callAPI("POST", '/tasks/' + taskid + '/score/' + dir));
+		if (p.success != 'true') {
+			alert('Failed to score task ' + taskid + ', doublecheck its ID');
+			return;
+		}
+		result = p.data.delta;  // We could alternatively return one of gp/exp/mp/hp
+		results = [ p.data.lvl, p.data.hp, p.data.exp, p.data.mp, p.data.gp ];
 	}
 }
 
 // Input: taskid
-// End results: completed, text, notes, value, priority, streak
+// End results: completed, text, notes, value, priority, streak, createdAt, updatedAt
 // guessed from http://blog.andrew.net.au/2014/08/05
 function query_task() {
-	var p = JSON.parse(callAPI('GET', '/user/tasks/' + taskid));
-	results = [ p.completed, p.text, p.notes, p.value, p.priority, p.streak ];
+	var p = JSON.parse(callAPI('GET', '/tasks/' + taskid));
+	if (p.success != 'true') {
+		alert('Failed to get task ' + taskid + ', doublecheck its ID');
+		return;
+	}
+	results = [ p.data.completed, p.data.text, p.data.notes, p.data.value, p.data.priority, p.data.streak, p.data.createdAt, p.data.updatedAt ];
 }
 
 // Input: tagname
@@ -88,11 +105,11 @@ function query_task() {
 function get_tasks_by_tag_name() {
 	var today = get_today();
 	var p = get_tasks_by_tag_id(get_tag_id_by_name(tagname));
-	for (var key in p) {
-		if (p[key].type == 'daily' && !(p[key].repeat[today])) {
+	for (var key in p.data) {
+		if (p.data[key].type == 'daily' && !(p.data[key].repeat[today])) {
 			continue;
 		}
-		var txt = p[key].id + ',' + p[key].text + ',' + p[key].notes;
+		var txt = p.data[key].id + ',' + p.data[key].text + ',' + p.data[key].notes;
 		result += txt + '\n';
 		results.push(txt);
 	}
@@ -103,9 +120,9 @@ function get_tasks_by_tag_name() {
 // End results: array of streak@title
 function get_streaks() {
 	var p = get_all_tasks();
-	for (var key in p) {
-		if (p[key].streak) {
-			var txt = p[key].streak + '@' + p[key].text;
+	for (var key in p.data) {
+		if (p.data[key].streak) {
+			var txt = p.data[key].streak + '@' + p.data[key].text;
 			result += txt + '\n';
 			results.push(txt);
 		}
@@ -120,8 +137,8 @@ function get_due() {
 	var today = get_today();
 
 	var p = get_all_tasks();
-	for (var key in p) {
-		var obj = p[key];
+	for (var key in p.data) {
+		var obj = p.data[key];
 		if (obj.type != 'daily' || obj.completed)   {
 			continue;
 		}
@@ -133,6 +150,7 @@ function get_due() {
 }
 
 // This is a helper function for get_due and get_tasks_by_tag_name
+// FIXME: Only works for On Certain Days of the Week, not for Every X Days
 function get_today() {
 	var today = new Date();
 	// It would be cumbersome to get the entire user object just for this
@@ -147,29 +165,29 @@ function get_today() {
 
 // This is a helper function for get_streaks and get_due
 function get_all_tasks() {
-	return JSON.parse(callAPI('GET', '/user/tasks'));
+	return JSON.parse(callAPI('GET', '/tasks/user'));
 }
 
 function get_tasks_by_tag_id(tagId) {
 	return get_all_tasks().filter(function (el) {
-		return el.tags[tagId] == true;
+		return el.data.tags[tagId] == true;
 	});
 }
 
 function get_tag_id_by_name(tagName) {
 	return get_all_tags().filter(function (el) {
-		return el.name == tagName;
+		return el.data.name == tagName;
 	})[0].id;
 }
 
 function get_all_tags() {
-	return JSON.parse(callAPI('GET', '/user/tags'));
+	return JSON.parse(callAPI('GET', '/tags'));
 }
 
 // This is a helper function for all calls
-function callAPI(method, partialURL, postData) {
+function callAPI(method, route, postData) {
 	var http = new XMLHttpRequest();
-	http.open(method, BASE_URL + partialURL, false);
+	http.open(method, BASE_URL + route, false);
 	http.setRequestHeader('Content-Type', 'application/json');
 	http.setRequestHeader('x-api-user', global('HabitrpgUserid'));
 	http.setRequestHeader('x-api-key', global('HabitrpgApiToken'));
@@ -186,7 +204,7 @@ try {
 		case 'get_streaks' : get_streaks(); break;
 		case 'get_due' : get_due(); break;
 		case 'get_tasks_by_tag': get_tasks_by_tag_name(); break;
-		default: flash('HabitRPGfns.js lacks "' + operation + '"');
+		default: alert('HabitRPGfns.js lacks "' + operation + '"');
 	}
 } catch (e) {
 	var error = e.message;
