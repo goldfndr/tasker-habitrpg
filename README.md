@@ -1,33 +1,37 @@
 tasker-habitrpg
 ===============
 
-A base for interacting with [HabitRPG's](https://habitrpg.com/) [API](https://habitrpg.com/static/api) via [Tasker](http://tasker.dinglisch.net/)
+A base for interacting with [Habitica's](https://habitica.com/) [API](https://habitica.com/apidoc/) via [Tasker](http://tasker.dinglisch.net/)
 
 Installation
 ------------
 
-1. After downloading the files, edit **HabitRPGfns.js** to match your [API values](https://habitrpg.com/#/options/settings/api) (note the *API Token like a password* warning!) and [CDS](http://habitrpg.wikia.com/wiki/Settings#Custom_Day_Start). Note that you'll need to uncomment them (remove the ```//``` at the beginning of the three ```setGlobal``` lines).
+1. After downloading the files, edit **HabitRPGfns.js** to match your [API values](https://habitica.com/#/options/settings/api) (note the *API Token like a password* warning!) and [CDS](http://habitica.wikia.com/wiki/Settings#Custom_Day_Start). Note that you'll need to uncomment them (remove the ```//``` at the beginning of the three ```setGlobal``` lines).
 
 2. In your **/sdcard/Tasker** directory, create a ```JavaScript``` directory.
 (You'll probably find other directories here, like ```log``` and ```userguide```.)
 
 3. Copy the edited **HabitRPGfns.js** file to your newly created **/sdcard/Tasker/JavaScript** directory.
-If you hadn't edited it yet, you could paste the values in from the [mobile app](https://play.google.com/store/apps/details?id=com.ocdevel.habitrpg). After you confirm it's operational, you can recomment or delete those lines. New versions of HabitRPGfns.js will have them commented out.
+If you hadn't edited it yet, you could paste the values in from the [mobile app](https://play.google.com/store/apps/details?id=com.habitrpg.android.habitica) (see Settings/Account Details). After you confirm it's operational, you can recomment or delete those lines. New versions of HabitRPGfns.js will have them commented out.
 
 4. Optionally import the example tasks. Copy them somewhere (e.g. /sdcard/Tasker/tasks) then, within Tasker, [Import](http://tasker.dinglisch.net/userguide/en/faqs/faq-how.html#q). The files need to end with ".tsk.xml" to be listed.
 
 For the example task  *check done*, you'll need to change the Variable Set ```%taskid``` action to use one of your own values. I suggest cloning this task (long-press name, menu, Clone) to avoid confusion, or you could import again.
-*score a task* now supports Task ID and direction as parameters (%par1 and %par2), you can simply use it by adding to your personal task the "Perform Task" action, specify the "score a task" task and insert the Task ID into parameter 1 and direction into parameter 2 (optional)
+
+*score a task* now supports Task ID and direction as parameters (%par1 and %par2), you can simply use it by adding to your personal task the "Perform Task" action: specify the "score a task" task and insert the Task ID into parameter 1 and (optionally) direction into parameter 2.
+
 An easy method to find a Task's ID is to use the [User Data Display](https://oldgods.net/habitrpg/habitrpg_user_data_display.html)'s Task Overview with "toggle developer data".
 A cumbersome alternative method is the following.
   1. Login to HabitRPG from Chrome or Firefox.
   2. Open the Developer Tools (press F12 or Ctrl+Shift+I).
   3. Choose the Network tab.
-  4. [Sync](http://habitrpg.wikia.com/wiki/Sync).
+  4. [Sync](http://habitica.wikia.com/wiki/Sync).
   5. Select the "batch-update" request.
   6. In the Preview (Chrome) or Response (Firefox) subtab, expand ```dailys``` or ```habits``` or ```todos``` or ```rewards``` (whatever you're looking for).
   7. For Chrome, find the text you seek, expand the task's entry. For Firefox, expand objects until you find the text you seek.
   8. The "id" has the value you'll use for the Variable Set ```%taskid``` action.
+
+***NOTE: All task IDs [from V2 have changed in V3](http://devs.habitica.com/important-notice-about-the-migration-from-api-v2-to-v3/) so values will need to be corrected.*** Thanks to API V3 reporting success as true or false, you'll be alerted if you use an invalid ID.
 
 HabitRPGfns.js is commented with each operation's inputs; use ```%result``` (string) or ```%results``` (array, e.g. ```%results2``` and ```%results3```) as appropriate for your actions' parameters.
 
@@ -80,7 +84,7 @@ Using tasker "Perform Task" action with *InitChecklist* (in conjunction with *Ne
 
 Credits
 -------
-* [LadyAlys: Android's Tasker app and HabitRPG's API](http://habitrpg.wikia.com/wiki/User_blog:LadyAlys/Android%27s_Tasker_app_and_HabitRPG%27s_API)
+* [LadyAlys: Android's Tasker app and HabitRPG's API](http://habitica.wikia.com/wiki/User_blog:LadyAlys/Android%27s_Tasker_app_and_HabitRPG%27s_API)
 * [Diary of a geek](http://blog.andrew.net.au/2014/08/05#nfc_habitrpg) (some reverse engineering from screenshots)
 * https://github.com/Alys/tools-for-habitrpg, especially the [User Data Display](https://oldgods.net/habitrpg/habitrpg_user_data_display.html)
 * Others who have submitted pull requests, thanks!
