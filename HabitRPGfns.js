@@ -65,7 +65,7 @@ function score_task() {
 		//only for testing
 		// don't downscore if it's not a bad habit, check type and down
 		var q = JSON.parse(callAPI("GET", '/tasks/' + taskid));
-		if (q.success != 'true') {
+		if (q.success != true) {
 			alert('Failed to get task ' + taskid + ', doublecheck its ID');
 			return;
 		}
@@ -77,7 +77,7 @@ function score_task() {
 	}
 	if (runnable) {
 		var p = JSON.parse(callAPI("POST", '/tasks/' + taskid + '/score/' + dir));
-		if (p.success != 'true') {
+		if (p.success != true) {
 			alert('Failed to score task ' + taskid + ', doublecheck its ID');
 			return;
 		}
@@ -91,7 +91,7 @@ function score_task() {
 // guessed from http://blog.andrew.net.au/2014/08/05
 function query_task() {
 	var p = JSON.parse(callAPI('GET', '/tasks/' + taskid));
-	if (p.success != 'true') {
+	if (p.success != true) {
 		alert('Failed to get task ' + taskid + ', doublecheck its ID');
 		return;
 	}
