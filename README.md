@@ -20,16 +20,7 @@ For the example task  *check done*, you'll need to change the Variable Set ```%t
 
 *score a task* now supports Task ID and direction as parameters (%par1 and %par2), you can simply use it by adding to your personal task the "Perform Task" action: specify the "score a task" task and insert the Task ID into parameter 1 and (optionally) direction into parameter 2.
 
-An easy method to find a Task's ID is to use the [User Data Display](https://oldgods.net/habitrpg/habitrpg_user_data_display.html)'s Task Overview with "toggle developer data".
-A cumbersome alternative method is the following.
-  1. Login to HabitRPG from Chrome or Firefox.
-  2. Open the Developer Tools (press F12 or Ctrl+Shift+I).
-  3. Choose the Network tab.
-  4. [Sync](http://habitica.wikia.com/wiki/Sync).
-  5. Select the "user?userV=*number*" request.
-  6. In the Preview (Chrome) or Response (Firefox) subtab, expand ```data```.
-  7. For Chrome, find the text you seek, expand the task's entry. For Firefox, expand objects until you find the text you seek.
-  8. The "id" has the value you'll use for the Variable Set ```%taskid``` action.
+You can find a list of all your tasks here: https://habitica.com/export/history.csv
 
 ***NOTE: All task IDs [from V2 have changed in V3](http://devs.habitica.com/important-notice-about-the-migration-from-api-v2-to-v3/) so values will need to be corrected.*** Thanks to API V3 reporting success as true or false, you'll be alerted if you use an invalid ID.
 
